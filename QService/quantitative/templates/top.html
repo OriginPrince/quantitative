@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>基于SVM的股指量化分析系统</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/static/css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" href="/static/css/uniform.css" />
+<link rel="stylesheet" href="/static/css/select2.css" />
+<link rel="stylesheet" href="/static/css/matrix-style.css" />
+<link rel="stylesheet" href="/static/css/matrix-media.css" />
+<link href="/static/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/echarts.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<!--Header-part-->
+<div id="header">
+  <h1><a href="#">股指量化分析系统</a></h1>
+</div>
+
+<!--top-Header-menu-->
+<div id="user-nav" class="navbar navbar-inverse">
+  <ul class="nav">
+    <li  class="" id="profile-messages" >
+        {% if user %}
+        <a title="" href="#">
+            <i class="icon icon-user"></i>
+            <span class="text">欢迎{{ user }}</span>
+            <b class="caret"></b>
+        </a>
+        {%else%}
+        <a title="" href="#exampleModal"  data-toggle="modal" data-target="#exampleModal" >
+            <i class="icon icon-user"></i>
+            <span class="text">登录</span>
+            <b class="caret"></b>
+        </a>
+        {% endif %}
+    </li>
+    <li class="dropdown" id="menu-messages">
+        <a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle">
+            <i class="icon icon-envelope"></i>
+            <span class="text">消息</span>
+            <span class="label label-important">5</span>
+            <b class="caret"></b>
+        </a>
+      <ul class="dropdown-menu">
+        <li><a class="sAdd" title="" href="#"><i class="icon-plus"></i> new message</a></li>
+        <li class="divider"></li>
+        <li><a class="sInbox" title="" href="#"><i class="icon-envelope"></i> inbox</a></li>
+        <li class="divider"></li>
+        <li><a class="sOutbox" title="" href="#"><i class="icon-arrow-up"></i> outbox</a></li>
+        <li class="divider"></li>
+        <li><a class="sTrash" title="" href="#"><i class="icon-trash"></i> trash</a></li>
+      </ul>
+    </li>
+    <li class="">
+        <a title="" href="#" id="logout">
+            <i class="icon icon-share-alt"></i>
+            <span class="text">注销</span>
+        </a>
+    </li>
+  </ul>
+</div>
+
+
+
+<!--sidebar-menu-->
+<div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
+  <ul>
+    <li id="nowPage"> <a href="/disNow/"><i class="icon icon-signal"></i> <span>实时走势</span></a> </li>
+    <li id="histPage"><a href="/disHist/"><i class="icon icon-th"></i> <span>历史数据</span></a></li>
+    <li id="changePage"><a href="#"><i class="icon icon-pencil"></i> <span>修改参数</span></a></li>
+    <li class="submenu" id="recordPage"> <a href="/disRecord/"><i class="icon icon-file"></i> <span>交易记录</span> <span class="label label-important">5</span></a>
+      <ul>
+        <li><a href="#">Dashboard2</a></li>
+        <li><a href="#">Gallery</a></li>
+        <li><a href="#">Calendar</a></li>
+        <li><a href="#">Invoice</a></li>
+        <li><a href="#">Chat option</a></li>
+      </ul>
+    </li>
+  </ul>
+</div>
+<!--sidebar-menu-->
+
+<!--注册框-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">登录</h4>
+      </div>
+        <form class="form-horizontal" method="post" action="#" name="basic_validate" id="basic_validate" novalidate="novalidate">
+            <div class="modal-body">
+              <div class="control-group">
+                <label class="control-label" style="margin-right: 30px;font-size: 1.3em">手机号</label>
+                <div class="controls">
+                  <input type="text" name="phone" id="LOphone">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" style="margin-right: 30px;font-size: 1.3em">密码</label>
+                <div class="controls">
+                  <input type="password" name="psd" id="LOpsd">
+                </div>
+              </div>
+                <div class="control-group">
+                <a href="/register/" style="color: red;float:right;margin-right:30px;font-size: 1.2em">还没有账号？马上注册</a>
+              </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 20px;float: left">取消</button>
+                <button type="button" class="btn btn-primary" style="margin-right: 20px;" id="LOsubmit" onclick="return false;">登录</button>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
+
+<!--用作警告的模态框-->
+<div class="modal fade" id="example" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;width:400px;left:55%;top:30%;color: #a94442;background-color: #f2dede;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+            <div class="modal-body">
+              <div class="control-group">
+                <p id="AlertMessage" style="font-size: 1.5em;margin-top: 10px;text-align: center"></p>
+              </div>
+            </div>
+            <div class="modal-footer"style="background-color: #f2dede;">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-right: 20px;">确定</button>
+            </div>
+    </div>
+  </div>
+</div>
+<!--用作消息的模态框-->
+<div class="modal fade" id="textExample" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none;width:400px;left:55%;top:30%;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+            <div class="modal-body">
+              <div class="control-group">
+                <p id="textMessage" style="font-size: 1.5em;margin-top: 10px;text-align: center"></p>
+              </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" style="margin-right: 20px;" id="TextSubmit">确定</button>
+            </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    $("#LOsubmit").click(function(){
+                 var psd=$("#LOpsd").val();
+                 var phone=$("#LOphone").val();
+
+                 var psdregx=/[0-9 | A-Z | a-z]{6,20}/;
+                 var psdflag=psdregx.test(psd);
+                 var phoneregx=/^1[0-9]{10}$/;
+                 var phoneflag=phoneregx.test(phone);
+                 if(!psdflag){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("密码格式有误");
+                 }
+                 else if(!phoneflag){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("手机号输入有误");
+                 }
+                 else {
+                         $.post("/post_login/",{Fpsd:psd,Fphone:phone}).done(function(result){
+                        if(result=='true')
+                        {
+                            $("#textMessage").text("登录成功");
+                            $("#TextSubmit").click(function(){
+                                 location.reload();
+                              });
+                                 //注意此出绑定的方法是否为一次性
+                            $("#textExample").modal('toggle');
+                        }else if(result=='false'){
+                            $("#example").modal('toggle');
+                            $("#AlertMessage").text("手机号或密码输入错误");
+                        }else{
+                            $("#example").modal('toggle');
+                            $("#AlertMessage").text("登录错误");
+                         }
+                     })
+                 }
+         });
+
+    $("#logout").click(function(){
+        $.get("/logout/").done(function(result){
+            if(result=="delete"){
+                $("#textMessage").text("注销成功");
+                $("#TextSubmit").click(function(){
+                    location.reload();
+                });
+                //注意此出绑定的方法是否为一次性
+                $("#textExample").modal('toggle');
+
+            }else{
+                $("#example").modal('show');
+                $("#AlertMessage").text("未登录");
+            }
+        })
+    })
+    $("#LOphone").blur(function(){
+        var phone=$("#LOphone").val();
+        var regx=/^1[0-9]{10}$/;
+        var phoneflag=regx.test(phone);
+        if(!phoneflag){
+            $("#example").modal('show');
+            $("#AlertMessage").text("手机号输入有误");
+        }
+    })
+    $("#LOpsd").blur(function(){
+        var psd=$("#LOpsd").val();
+        var regx=/[0-9 | A-Z | a-z]{6,20}/;
+        var psdflag=regx.test(psd);
+        if(!psdflag){
+            $("#example").modal('toggle');
+            $("#AlertMessage").text("密码格式有误");
+        }
+    })
+</script>
+

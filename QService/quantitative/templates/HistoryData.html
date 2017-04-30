@@ -1,0 +1,59 @@
+{%include "top.html"%}
+
+
+<!--main-container-part-->
+<div id="content">
+<!--breadcrumbs-->
+  <div id="content-header">
+    <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a></div>
+  </div>
+<!--End-breadcrumbs-->
+
+    <hr/>
+    <div class="row-fluid">
+      <div class="span12">
+		<!------------------------------------>
+        <div class="widget-box">
+          <div class="widget-title">
+            <ul class="nav nav-tabs">
+              <li class="active"><a data-toggle="tab" href="#tab1">上证指数</a></li>
+                <li><a data-toggle="tab" href="#tab2">深圳成指</a></li>
+              <li><a data-toggle="tab" href="#tab3">上证50</a></li>
+                <li><a data-toggle="tab" href="#tab4">中小板</a></li>
+              <li><a data-toggle="tab" href="#tab5">创业板</a></li>
+              <li><a data-toggle="tab" href="#tab6">沪深300</a></li>
+            </ul>
+          </div>
+          <div class="widget-content tab-content" style="margin-bottom: 5px">
+            <div id="tab1" class="tab-pane active">
+                {%include "displaySH.html"%}
+			</div>
+            <div id="tab2" class="tab-pane">
+                {%include "displaySZ.html"%}
+			</div>
+              <div id="tab3" class="tab-pane">
+				{%include "displaySZ50.html"%}
+			</div>
+              <div id="tab4" class="tab-pane">
+				{%include "displayZXB.html"%}
+			</div>
+                  <div id="tab5" class="tab-pane">
+				{%include "displayCYB.html"%}
+			</div>
+               <div id="tab6" class="tab-pane">
+				{%include "displayHS300.html"%}
+			</div>
+          </div>
+        </div>
+		<!------------------------------------>
+      </div>
+    </div>
+	
+</div>
+<script>
+   $(function ($) {
+        $("#histPage").addClass("active");
+   })
+</script>
+<!--end-main-container-part-->
+{%include "footer.html"%}

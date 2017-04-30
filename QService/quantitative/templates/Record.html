@@ -1,0 +1,149 @@
+{%include "top.html"%}
+
+<div id="content">
+  <div id="content-header">
+    <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Tables</a> </div>
+    <h1>Tables</h1>
+  </div>
+  <div class="container-fluid">
+    <hr>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+            <h5>Static table</h5>
+          </div>
+          <div class="widget-content nopadding">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+				  <th>大盘指数</th>
+                  <th>上证指数</th>
+                  <th>深证指数</th>
+                  <th>沪深300</th>
+                  <th>上证50</th>
+                  <th>中小板</th>
+				  <th>创业板</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="odd gradeX">
+				  <td>投资金额</td>
+                  <td>Trident</td>
+                  <td>Internet</td>
+                  <td>Win 95+</td>
+                  <td class="center"> 4</td>
+                  <td class="center">X</td>
+				  <td class="center">X</td>
+                </tr>
+                <tr class="even gradeC">
+				  <td>持有金额</td>
+                  <td>Trident</td>
+                  <td>Internet</td>
+                  <td>Win 95+</td>
+                  <td class="center">5</td>
+                  <td class="center">C</td>
+				  <td class="center">X</td>
+                </tr>
+                <tr class="odd gradeA">
+				  <td>收益率</td>
+                  <td>Trident</td>
+                  <td>Internet</td>
+                  <td>Win 95+</td>
+                  <td class="center">5.5</td>
+                  <td class="center">A</td>
+				  <td class="center">X</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+            <h5>Data table</h5>
+          </div>
+          <div class="widget-content nopadding">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+				  <th>大盘指数</th>
+                  <th>上证指数</th>
+                  <th>深证指数</th>
+                  <th>沪深300</th>
+                  <th>上证50</th>
+                  <th>中小板</th>
+				  <th>创业板</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="odd gradeA">
+				  <td>日期</td>
+                  <td>Trident</td>
+                  <td>Internet</td>
+                  <td>Win 95+</td>
+                  <td class="center">5.5</td>
+                  <td class="center">A</td>
+				  <td class="center">X</td>
+                </tr>
+				  <tr class="odd gradeX">
+				  <td>日期</td>
+                  <td>Trident</td>
+                  <td>Internet</td>
+                  <td>Win 95+</td>
+                  <td class="center"> 4</td>
+                  <td class="center">X</td>
+				  <td class="center">X</td>
+                </tr>
+                <tr class="odd gradeA">
+				  <td>日期</td>
+                  <td>Trident</td>
+                  <td>Internet</td>
+                  <td>Win 95+</td>
+                  <td class="center">5.5</td>
+                  <td class="center">A</td>
+				  <td class="center">X</td>
+                </tr>
+				  <tr class="odd gradeX">
+				  <td>日期</td>
+                  <td>Trident</td>
+                  <td>Internet</td>
+                  <td>Win 95+</td>
+                  <td class="center"> 4</td>
+                  <td class="center">X</td>
+				  <td class="center">X</td>
+                </tr>
+                <tr class="even gradeC">
+				  <td>日期</td>
+                  <td>Trident</td>
+                  <td>Internet</td>
+                  <td>Win 95+</td>
+                  <td class="center">5</td>
+                  <td class="center">C</td>
+				  <td class="center">X</td>
+                </tr>
+              </tbody>
+            </table>
+
+                <div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_full_numbers" >
+                  <a tabindex="0" class="first ui-corner-tl ui-corner-bl fg-button ui-button ui-state-default ui-state-disabled">First</a></span>
+                  <a tabindex="0" class="previous fg-button ui-button ui-state-default ui-state-disabled">Previous</a><span>
+                  <a tabindex="0" class="fg-button ui-button ui-state-default ui-state-disabled">1</a><span>
+                  <a tabindex="0" class="fg-button ui-button ui-state-default">2</a><span>
+                  <a tabindex="0" class="fg-button ui-button ui-state-default">3</a></span>
+                  <a tabindex="0" class="next fg-button ui-button ui-state-default">Next</a></span>
+                  <a tabindex="0" class="last ui-corner-tr ui-corner-br fg-button ui-button ui-state-default">Last</a></span>
+             </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+   $(function ($) {
+        $("#recordPage").addClass("active");
+   })
+</script>
+{%include "footer.html"%}

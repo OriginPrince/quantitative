@@ -1,0 +1,143 @@
+{%include "top.html"%}
+
+<div id="content">
+  <div id="content-header">
+    <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a> <a href="#" class="current">注册</a> </div>
+    <h1>注册</h1>
+  </div>
+  <div class="container-fluid"><hr>
+    <div class="row-fluid">
+      <div style="margin-left: 40px;margin-right: 40px;margin-top: 40px;">
+        <div class="widget-box" style="width: 650px;margin: 0 auto;">
+          <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+            <h5>修改参数</h5>
+          </div>
+          <div class="widget-content nopadding">
+            <form class="form-horizontal" method="post" action="#" name="basic_validate" id="basic_validate" novalidate="novalidate">
+              <div class="control-group">
+                <label class="control-label" style="margin-right: 10px;">姓名</label>
+                <div class="controls">
+                  <input type="text" name="name" id="REname">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" style="margin-right: 10px;">密码</label>
+                <div class="controls">
+                  <input type="password" name="psd" id="REpsd" placeholder="输入6~20字符的数字或字母">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" style="margin-right: 10px;">确认密码</label>
+                <div class="controls">
+                  <input type="password" name="repsd" id="RErepsd">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" style="margin-right: 10px;">手机号</label>
+                <div class="controls">
+                  <input type="text" name="phone" id="REphone">
+                </div>
+              </div>
+                <div class="control-group">
+                <label class="control-label" style="margin-right: 10px;">邮箱</label>
+                <div class="controls">
+                  <input type="text" name="email" id="REemail">
+                </div>
+              </div>
+              <div class="form-actions">
+                  <input type="reset" value="重置" class="btn btn-reset" style="margin-left: 20px;">
+                <input type="submit" id="REsubmit" value="注册" class="btn btn-success" onclick="return false;"  style="float:right;margin-right: 30px;">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    $("#REsubmit").click(function(){
+                 var name=$("#REname").val();
+                 var psd=$("#REpsd").val();
+                 var repsd=$("#RErepsd").val();
+                 var phone=$("#REphone").val();
+                 var email=$("#REemail").val();
+
+                 var psdregx=/[0-9 | A-Z | a-z]{6,20}/;
+                 var psdflag=psdregx.test(psd);
+                 var phoneregx=/^1[0-9]{10}$/;
+                 var phoneflag=phoneregx.test(phone);
+                 var emailregx=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+                 var emailflag=emailregx.test(email);
+                 if(!psdflag){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("密码格式有误");
+                 }
+                 else if(psd!=repsd){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("两次密码不一致");
+                 }
+                 else if(!phoneflag){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("手机号输入有误");
+                 }
+                 else if(!emailflag){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("邮箱格式有误");
+                 }
+                 else{
+                        $.post("/post_register/",{Fname:name,Fpsd:psd,Fphone:phone,Femail:email}).done(function(result){
+                             if(result=="true"){
+                                 $("#textMessage").text("注册成功");
+                                 $("#TextSubmit").click(function(){
+                                     window.location.href='/disHist/';
+                                 });
+                                 //注意此出绑定的方法是否为一次性
+                                 $("#textExample").modal('toggle');
+                             }else if(result=="already"){
+                                 $("#example").modal('toggle');
+                                 $("#AlertMessage").text("手机号已经注册");
+                             }else{
+                                 $("#example").modal('toggle');
+                                 $("#AlertMessage").text("注册失败");
+                             }
+                     })
+                 }
+    })
+    $("#REpsd").blur(function(){
+        var psd=$("#REpsd").val();
+        var regx=/[0-9 | A-Z | a-z]{6,20}/;
+        var psdflag=regx.test(psd);
+        if(!psdflag){
+            $("#example").modal('show');
+            $("#AlertMessage").text("密码格式有误");
+        }
+    })
+    $("#RErepsd").blur(function(){
+        var repsd=$("#RErepsd").val();
+        var psd=$("#REpsd").val();
+        if(psd!=repsd){
+            $("#example").modal('show');
+            $("#AlertMessage").text("两次密码不一样");
+        }
+    })
+    $("#REphone").blur(function(){
+        var phone=$("#REphone").val();
+        var regx=/^1[0-9]{10}$/;
+        var phoneflag=regx.test(phone);
+        if(!phoneflag){
+            $("#example").modal('show');
+            $("#AlertMessage").text("手机号输入有误");
+        }
+    })
+    $("#REemail").blur(function(){
+        var email=$("#REemail").val();
+        var regx=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+        var emailflag=regx.test(email);
+        if(!emailflag){
+            $("#example").modal('show');
+            $("#AlertMessage").text("邮箱格式有误");
+        }
+    })
+</script>
+{%include "footer.html"%}
