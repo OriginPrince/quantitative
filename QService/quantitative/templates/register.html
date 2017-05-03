@@ -56,6 +56,11 @@
   </div>
 </div>
 <script>
+    $(function($){
+        $.ajaxSetup({
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+            });
+    })
     $("#REsubmit").click(function(){
                  var name=$("#REname").val();
                  var psd=$("#REpsd").val();

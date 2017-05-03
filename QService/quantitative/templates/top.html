@@ -73,16 +73,8 @@
   <ul>
     <li id="nowPage"> <a href="/disNow/"><i class="icon icon-signal"></i> <span>实时走势</span></a> </li>
     <li id="histPage"><a href="/disHist/"><i class="icon icon-th"></i> <span>历史数据</span></a></li>
-    <li id="changePage"><a href="#"><i class="icon icon-pencil"></i> <span>修改参数</span></a></li>
-    <li class="submenu" id="recordPage"> <a href="/disRecord/"><i class="icon icon-file"></i> <span>交易记录</span> <span class="label label-important">5</span></a>
-      <ul>
-        <li><a href="#">Dashboard2</a></li>
-        <li><a href="#">Gallery</a></li>
-        <li><a href="#">Calendar</a></li>
-        <li><a href="#">Invoice</a></li>
-        <li><a href="#">Chat option</a></li>
-      </ul>
-    </li>
+    <li id="changePage"><a href="/change/"><i class="icon icon-pencil"></i> <span>修改参数</span></a></li>
+    <li id="recordPage"> <a href="/disRecord/"><i class="icon icon-file"></i> <span>交易记录</span> <span class="label label-important">5</span></a></li>
   </ul>
 </div>
 <!--sidebar-menu-->
@@ -154,6 +146,11 @@
 </div>
 
 <script>
+    $(function($){
+        $.ajaxSetup({
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+            });
+    })
     $("#LOsubmit").click(function(){
                  var psd=$("#LOpsd").val();
                  var phone=$("#LOphone").val();
@@ -224,6 +221,13 @@
             $("#example").modal('toggle');
             $("#AlertMessage").text("密码格式有误");
         }
+    })
+    $("#changePage").click(function(){
+        $.get("/change/").done(function(result){
+            if(result=='false'){
+                 $("#exampleModal").modal('toggle');
+            }
+        })
     })
 </script>
 

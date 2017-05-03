@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'quantitative.middleware.LoginRequireMiddleware',
 ]
 
 ROOT_URLCONF = 'QService.urls'
@@ -126,3 +127,5 @@ STATIC_URL = '/files/'
 STATICFILES_DIRS =(
 os.path.join(os.path.dirname(__file__), '../static/').replace('\\','/')
 )
+
+EXEMPT_URLS=['disRecord','change']
