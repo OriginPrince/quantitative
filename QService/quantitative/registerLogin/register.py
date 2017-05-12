@@ -42,6 +42,12 @@ def post_register(request):
             #data = cur.fetchall()
             #print u'登录结果：', data
             # 6.关闭cursor
+            sql3 = "select id from user where phone=%s"
+            # 4.执行sql命令
+            # execute可执行数据库查询select和命令insert，delete，update三种命令(这三种命令需要commit()或rollback())
+            cur.execute(sql3, (MD.md5(phone)))
+            id = cur.fetchall()
+            print "id",id
             cur.close()
             # 7.关闭connection
             conn.close()
@@ -56,6 +62,7 @@ def post_register(request):
                 return HttpResponse("already")
             elif n==1:
                 request.session['username'] =name
+                request.session['userid']=id[0][0]
                 return HttpResponse("true")
             else:
                 return HttpResponse("false")

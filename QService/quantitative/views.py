@@ -43,6 +43,6 @@ def change(request):
         user = request.session['username']
         print user
         if user:
-            return render(request,'change.html', {'user': user})
+            return render(request, 'ChangeData.html', {'user': user})
     else:
-        return render(request,'change.html', {'user': None})
+        return render(request, 'ChangeData.html', {'user': None})

@@ -27,6 +27,7 @@ def post_login(request):
             # fetchall遍历execute执行的结果集。取execute执行后放在缓冲区的数据，遍历结果，返回数据。
             # 返回的数据类型是元组类型，每个条数据元素为元组类型:(('第一条数据的字段1的值','第一条数据的字段2的值',...,'第一条数据的字段N的值'),(第二条数据),...,(第N条数据))
             data = cur.fetchall()
+            print u'data值',data
             #print u'登录结果：', data[0][3]
             # 6.关闭cursor
             cur.close()
@@ -43,6 +44,7 @@ def post_login(request):
             else:
                 # 将username写入浏览器cookie,失效时间为3600
                 request.session['username']=data[0][3]
+                request.session['userid'] = data[0][4]
                 #print("登陆结果"+data[0][3])
                 return HttpResponse('true')
     else:
@@ -50,8 +52,12 @@ def post_login(request):
 
 
 def logout(request):
+    print "123",request.session['username']
+    print "123",request.session['userid']
     if "username" in request.session:
         del request.session['username']
+        if "userid" in request.session:
+            del request.session['userid']
         return HttpResponse("delete")
     else:
         return HttpResponse("false")

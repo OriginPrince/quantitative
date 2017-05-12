@@ -1,0 +1,53 @@
+{%include "top.html"%}
+
+<!--main-container-part-->
+<div id="content">
+<!--breadcrumbs-->
+  <div id="content-header">
+    <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a></div>
+  </div>
+<!--End-breadcrumbs-->
+
+    <hr/>
+    <div class="row-fluid">
+      <div class="span12">
+		<!------------------------------------>
+        <div class="widget-box">
+          <div class="widget-title">
+            <ul class="nav nav-tabs">
+              <li class="active"><a data-toggle="tab" href="#tab1">场景一</a></li>
+                <li><a data-toggle="tab" href="#tab2">场景二</a></li>
+              <li><a data-toggle="tab" href="#tab3">场景三</a></li>
+                <li><a data-toggle="tab" href="#tab4">场景四</a></li>
+            </ul>
+          </div>
+          <div class="widget-content tab-content">
+            <div id="tab1" class="tab-pane active">
+                {%include "change_initial.html"%}
+			</div>
+            <div id="tab2" class="tab-pane">
+                {%include "change_final.html"%}
+			</div>
+              <div id="tab3" class="tab-pane">
+				{%include "change_already_initial.html"%}
+			</div>
+              <div id="tab4" class="tab-pane">
+				{%include "change_already_final.html"%}
+			</div>
+          </div>
+        </div>
+		<!------------------------------------>
+      </div>
+    </div>
+
+</div>
+<script>
+   $(function ($) {
+        $("#changePage").addClass("active");
+         $.ajaxSetup({
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+            });
+   });
+</script>
+<!--end-main-container-part-->
+{%include "footer.html"%}
