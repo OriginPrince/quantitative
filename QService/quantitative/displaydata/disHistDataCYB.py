@@ -1,13 +1,12 @@
 # coding=utf-8
 '''
-Created on 2016-10-26
-@author: Jennifer
-Project:读取mysql数据库的数据，转为json格式
+@author: ElegyPrincess
 '''
 import json
 from django.http import HttpResponse
 import HistData as HD
 
+#根据前端传来的日期去查询具体数据
 def display_hist_cyb_price(request):
     if 'date' in request.GET:
         date=request.GET['date']+' 00:00:00'
@@ -21,7 +20,7 @@ def display_hist_cyb_price(request):
     else:
         print "未获取到数据"
 
-
+#获取图形化展示的数据
 def display_hist_cyb(request):
         stock = "cyb_hist_data"
         data = HD.histData(stock)

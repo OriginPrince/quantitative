@@ -3,6 +3,7 @@ from django.shortcuts import render
 
 
 def DispalyHist(request):
+    #判断username是否存在session中
     if "username" in request.session:
         user=request.session['username']
         print user

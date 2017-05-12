@@ -14,7 +14,7 @@ class threadSZ50(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
         self.__flag = threading.Event()     # 用于暂停线程的标识
-        self.__flag.clear()       # 设置为True
+        self.__flag.clear()       # 设置为false
         self.__running = threading.Event()      # 用于停止线程的标识
         self.__running.set()      # 将running设置为True
 

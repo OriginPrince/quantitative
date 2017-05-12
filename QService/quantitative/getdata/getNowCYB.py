@@ -14,7 +14,7 @@ class threadCYB(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
         self.__flag = threading.Event()     # 用于暂停线程的标识
-        self.__flag.clear()       # 设置为True
+        self.__flag.clear()       # 设置为False,当start线程的时候并不运行，resume的时候才去运行，这样的话当脚本启动的时候不会立即执行
         self.__running = threading.Event()      # 用于停止线程的标识
         self.__running.set()      # 将running设置为True
 
@@ -61,7 +61,7 @@ def resume_morning_job():
 def resume_afternoon_job():
     threadcyb.resume()
     print("resume morning")
-
+#让自增的数据从0开始
 def deleteAll_job():
     engine.execute("truncate table cyb_now_data")
     print("truncate table")

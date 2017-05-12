@@ -11,27 +11,16 @@ timenow = time.strftime("%Y-%m-%d", time.localtime())
 engine=create_engine('mysql://root:888212@127.0.0.1/economic?charset=utf8')
 
 
-# 1-7：如何使用python DB API访问数据库流程的
-# 1.创建mysql数据库连接对象connection
-# connection对象支持的方法有cursor(),commit(),rollback(),close()
 conn = MySQLdb.Connect(host='localhost', user='root', passwd='888212', db='economic', port=3306, charset='utf8')
-# 2.创建mysql数据库游标对象 cursor
-# cursor对象支持的方法有execute(sql语句),fetchone(),fetchmany(size),fetchall(),rowcount,close()
 cur = conn.cursor()
-# 3.编写sql
-#sql = 'SELECT date,open,close,low,high,volume,amount FROM cyb_hist_data where date="'+request.GET['date']+' 00:00:00"'
 sql_sh = "select * from sh_hist_data order by date desc limit 1"
 sql_sz = "select * from sz_hist_data order by date desc limit 1"
 sql_sz50 = "select * from sz50_hist_data order by date desc limit 1"
 sql_hs300 = "select * from hs300_hist_data order by date desc limit 1"
 sql_zxb = "select * from zxb_hist_data order by date desc limit 1"
 sql_cyb = "select * from cyb_hist_data order by date desc limit 1"
-# 4.执行sql命令
-# execute可执行数据库查询select和命令insert，delete，update三种命令(这三种命令需要commit()或rollback())
+#数据库中是否有数据
 cur.execute(sql_sh)
-# 5.获取数据
-# fetchall遍历execute执行的结果集。取execute执行后放在缓冲区的数据，遍历结果，返回数据。
-# 返回的数据类型是元组类型，每个条数据元素为元组类型:(('第一条数据的字段1的值','第一条数据的字段2的值',...,'第一条数据的字段N的值'),(第二条数据),...,(第N条数据))
 sh_result= cur.fetchall()
 
 cur.execute(sql_sz)
@@ -49,7 +38,7 @@ zxb_result= cur.fetchall()
 cur.execute(sql_cyb)
 cyb_result= cur.fetchall()
 
-'''date maybe unlikeness'''
+#获取从数据库中的最新日期开始，到现在的数据
 def sh_job():
     timenow = time.strftime("%Y-%m-%d", time.localtime())
     date = sh_result[0][0]
@@ -133,6 +122,7 @@ def cyb_job():
             cyb_df.to_sql('cyb_hist_data', engine, if_exists='append')
             print "insert successfully"
 
+#如果数据库中没有数据，那么从头开始获取数据，否则的话从数据库最近日期开始获取到现在的数据
 if sh_result==():
     sh_df = ts.get_h_data('000001', index=True, start='1995-01-01', end=timenow)
     sh_df.to_sql('sh_hist_data', engine, if_exists='append')
@@ -187,9 +177,9 @@ def job():
 
 
 if __name__=='__main__':
-
+    #制定定时任务
 	scheduler = BackgroundScheduler()
-	scheduler.add_job(job, 'cron', day_of_week='mon-fri', hour=19, minute=35)
+	scheduler.add_job(job, 'cron', day_of_week='mon-fri', hour=22, minute=00)
 	scheduler.start()
 	try:
 		while True:

@@ -1,8 +1,6 @@
 # coding=utf-8
 '''
-Created on 2016-10-26
-@author: Jennifer
-Project:读取mysql数据库的数据，转为json格式
+@author: ElegyPrincess
 '''
 import  MySQLdb
 
@@ -32,7 +30,7 @@ def histPrice(date,stock):
             # 7.关闭connection
             conn.close()
         except:
-            print 'MySQL connect fail...'
+            print stock+'MySQL connect fail...'
         else:
             return data
 
@@ -61,7 +59,7 @@ def histData(stock):
         # 7.关闭connection
         conn.close()
     except:
-        print 'MySQL connect fail...'
+        print stock+'price MySQL connect fail...'
     else:
         return data
 

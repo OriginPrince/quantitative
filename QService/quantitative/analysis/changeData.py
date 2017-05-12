@@ -1,8 +1,6 @@
 # coding=utf-8
 '''
-Created on 2016-10-26
-@author: Jennifer
-Project:读取mysql数据库的数据，转为json格式
+@author: ElegyPrincess
 '''
 import MySQLdb
 from django.http import HttpResponse
@@ -26,9 +24,11 @@ def job(inRate,terms,ulInvest,dayCount,id_plan):
     elif result=="ok":
         print result
     elif result=="over":
+        #如果投资结束，删除定时任务
         print result
         jobID = 'my_job' + str(id_plan)
         scheduler.remove_job(jobID)
+        #将对应的id_plan的投资策略的over置为0
         m=DO.change_over(id_plan)[0]
         if m==0:
             print "修改失败"
@@ -38,6 +38,7 @@ def job(inRate,terms,ulInvest,dayCount,id_plan):
     else:
         pass
 
+#线程，在定时任务未完成的时候保持运行状态
 class threadRecord(threading.Thread):
     def __init__(self,inRate,terms,ulInvest,dayCount,id_plan):
         threading.Thread.__init__(self)
@@ -50,15 +51,17 @@ class threadRecord(threading.Thread):
         self.ulInvest=ulInvest
         self.dayCount=dayCount
         self.id_plan=id_plan
-        self.Isflag=True
+        self.Isflag=1
 
     def run(self):
         while self.__running.isSet():
             self.__flag.wait()  # 为True时立即返回, 为False时阻塞直到内部的标识位为True后返回
             jobID='my_job'+str(self.id_plan)
             print jobID
+            #添加定时任务，到时间去进行投资
             scheduler.add_job(job, 'interval', args=(self.inRate,self.terms,self.ulInvest,self.dayCount,self.id_plan),seconds=5 , id=jobID)
             scheduler.start()
+            #线程始终保持运行
             try:
                 while self.Isflag:
                     time.sleep(86400)
@@ -78,19 +81,18 @@ class threadRecord(threading.Thread):
         self.__flag.set()  # 将线程从暂停状态恢复, 如何已经暂停的话
         self.__running.clear()
 
+#情景二的投资
 @csrf_exempt
 def change_final(request):
     if request.POST:
-        ulInvest = request.POST['FulInvest']
-        ulInvest=str(ulInvest)
-        terms = request.POST['Fterms']
-        inRate = request.POST['FinRate']
-        inRate=str(inRate)
-        taxRate = request.POST['FtaxRate']
-        dayCount = request.POST['FdayCount']
-        id_user=request.session['userid']
-        print inRate
+        ulInvest = request.POST['FulInvest']#最终价值目标
+        terms = request.POST['Fterms']#总期数
+        inRate = request.POST['FinRate']#投资增长率
+        taxRate = request.POST['FtaxRate']#税率
+        dayCount = request.POST['FdayCount']#时间间隔
+        id_user=request.session['userid']#用户id
         tempTime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+        #暂时存储一些默认值
         tempClass=1
         tempAlterms=0
         tempVolume=0
@@ -101,9 +103,11 @@ def change_final(request):
             conn = MySQLdb.Connect(host='localhost', user='root', passwd='888212', db='economic', port=3306,
                                    charset='utf8')
             cur = conn.cursor()
+            #插入到计划表中
             sql1 = "insert into valueplan (ultimateInvest,rateInvest,terms,dayCount,id_user,class,time,alterms,volume,alInvest,over) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
             n = cur.execute(sql1, (ulInvest, inRate, terms, dayCount,id_user,tempClass,tempTime,tempAlterms,tempVolume,tempAlInvest,tempover))
             conn.commit()
+            #获取计划的id
             sql2 = "select id from valueplan where time = %s"
             cur.execute(sql2, (tempTime))
             data=cur.fetchall()
@@ -115,7 +119,7 @@ def change_final(request):
             # 调用子线程来执行定时任务，定投
             threadRE.start()
         except:
-            print 'MySQL connect fail...'
+            print '制定投资计划 MySQL connect fail...'
         if n != 1:
             print "插入错误"
             return HttpResponse("false")
