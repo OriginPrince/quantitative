@@ -1,0 +1,138 @@
+<h4>已经投资一段时间，希望若干年后拥有一笔资产，计算每期的投资</h4>
+            <form class="form-horizontal" method="post" action="#" name="basic_validate" id="basic_validate" style="margin:0 auto;margin-top:20px;width:800px;" novalidate="novalidate">
+                <div class="control-group">
+                <label class="control-label">所投资的种类</label>
+                <div class="controls">
+                  <select id="AFstock">
+                      <option value="0" selected="selected">上证指数</option>
+                      <option value="1">深证成指</option>
+                      <option value="2">上证50</option>
+                      <option value="3">沪深300</option>
+                      <option value="4">创业板指</option>
+                      <option value="5">中小板指</option>
+                  </select>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">最终价值目标</label>
+                <div class="controls">
+                  <input type="text"  id="AFulInvest" placeholder="最终价值目标">
+                </div>
+              </div>
+                <div class="control-group">
+                <label class="control-label">账户已有总额</label>
+                <div class="controls">
+                  <input type="text"  id="AFalInvest" placeholder="账户已有总额">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">将要投资总期数</label>
+                <div class="controls">
+                  <input type="text"  id="AFterms" placeholder="将要投资总期数">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">投资增长率</label>
+                <div class="controls">
+                  <input type="text"  id="AFinRate" placeholder="投资增长率">
+                </div>
+              </div>
+                <div class="control-group">
+                <label class="control-label">税率</label>
+                <div class="controls">
+                  <input type="text" id="AFtaxRate" placeholder="税率">
+                </div>
+              </div>
+                <div class="control-group">
+                <label class="control-label">每期多长时间</label>
+                <div class="controls">
+                  <select id="AFdayCount">
+                      <option value="15" selected="selected">15天</option>
+                      <option value="30">30天</option>
+                      <option value="60">60天</option>
+                      <option value="90">90天</option>
+                  </select>
+                </div>
+              </div>
+              <div class="controls" style="margin-top:30px;">
+                  <input type="reset" value="重置" class="btn btn-reset" style="margin-left: 70px;padding:8px 20px 8px 20px;">
+                <input type="submit" id="AFsubmit" value="确定" class="btn btn-success" onclick="return false;" style="float:right;margin-right: 120px;padding:8px 20px 8px 20px;">
+              </div>
+            </form>
+
+<script>
+    $("#AFsubmit").click(function(){
+                 var AFulInvest=$("#AFulInvest").val();
+                 var AFalInvest=$("#AFalInvest").val();
+                 var AFterms=$("#AFterms").val();
+                 var AFinRate=$("#AFinRate").val();
+                 var AFtaxRate=$("#AFtaxRate").val();
+                 var AFdayCount=$("#AFdayCount").val();
+                 var AFstock=$("#AFstock").val();
+                 if(AFulInvest<=0){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("最终价值目标输入有误");
+                 }
+                 else if(AFalInvest<=0){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("账户已有总额输入有误");
+                 }
+                 else if(AFterms<=0){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("将要投资总期数输入有误");
+                 }
+                 else if(AFinRate<=0){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("投资增长率率输入有误");
+                 }
+                 else if(AFtaxRate<=0){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("税率输入有误");
+                 }
+                 else{
+                     alert(AFstock)
+                        $.post("/change_AFinal/",{Fstock:AFstock,FulInvest:AFulInvest,FalInvest:AFalInvest,Fterms:AFterms,FinRate:AFinRate,FtaxRate:AFtaxRate,FdayCount:AFdayCount}).done(function(result){
+                             if(result=="true"){
+                                 $("#textMessage").text("设置成功");
+                                 $("#TextSubmit").click(function(){
+                                     location.reload();
+                                 });
+                                 //注意此出绑定的方法是否为一次性
+                                 $("#textExample").modal('toggle');
+                             }else{
+                                 $("#example").modal('toggle');
+                                 $("#AlertMessage").text("设置失败");
+                             }
+                     })
+                 }
+    });
+    $("#AFulInvest").blur(function(){
+       var AFulInvest=$("#AFulInvest").val();
+       if(AFulInvest<=0){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("最终价值目标输入有误");
+                 }
+
+    });
+    $("#AFterms").blur(function(){
+       var AFterms=$("#AFterms").val();
+       if(AFterms<=0){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("将要投资总期数输入有误");
+                 }
+    });
+    $("#AFinRate").blur(function(){
+        var AFinRate=$("#AFinRate").val();
+        if(AFinRate<=0){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("投资增长率率输入有误");
+                 }
+    });
+    $("#AFtaxRate").blur(function(){
+        var AFtaxRate=$("#AFtaxRate").val();
+        if(AFtaxRate<=0){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("税率输入有误");
+                 }
+    })
+</script>

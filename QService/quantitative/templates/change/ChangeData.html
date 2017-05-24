@@ -1,0 +1,45 @@
+{%include "top.html" %}
+
+<!--main-container-part-->
+<div id="content">
+    <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span12">
+		<!------------------------------------>
+        <div class="widget-box">
+          <div class="widget-title">
+            <ul class="nav nav-tabs">
+              <li class="active"><a data-toggle="tab" href="#tab1">场景一</a></li>
+                <li><a data-toggle="tab" href="#tab2">场景二</a></li>
+              <li><a data-toggle="tab" href="#tab3">场景三</a></li>
+            </ul>
+          </div>
+          <div class="widget-content tab-content">
+            <div id="tab1" class="tab-pane active">
+                {%include "change/change_initial.html" %}
+			</div>
+            <div id="tab2" class="tab-pane">
+                {%include "change/change_final.html" %}
+			</div>
+              <div id="tab3" class="tab-pane">
+				{%include "change/change_already_final.html" %}
+			</div>
+          </div>
+        </div>
+		<!------------------------------------>
+      </div>
+    </div>
+    </div>
+</div>
+
+
+<script>
+   $(function ($) {
+        $("#changePage").addClass("active");
+         $.ajaxSetup({
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+            });
+   });
+</script>
+<!--end-main-container-part-->
+{%include "footer.html" %}

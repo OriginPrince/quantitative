@@ -1,0 +1,81 @@
+ <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+    <div id="mainHS300" style="width: 600px;height:400px;"></div>
+     <div>
+        <p id="HS300Time" style="text-align: center"></p>
+    </div>
+	<script type="text/javascript">
+        setInterval(function () {
+		    $.get('/display_now_hs300_price').done(function(result) {
+		            var time = result.map(function (item) {//将原数组映射成新数组，时间
+                        return  item[0];
+                    });
+
+                    var price = result.map(function (item) {//将原数组映射成新数组，时间
+                        return  item[1];
+                    });
+                    $("#HS300Time").text("时间："+time+"　　　　"+"价格："+price);
+            });
+		}, 1000);
+        // 基于准备好的dom，初始化echarts实例
+        var myChartHS300 = echarts.init(document.getElementById('mainHS300'));
+		option = {
+			title: {
+				text: '动态数据 + 时间坐标轴'
+			},
+			tooltip: {
+				trigger: 'axis',
+				axisPointer: {
+					animation: false
+				}
+			},
+			xAxis: {
+				type: 'category',
+				splitLine: {
+					show: false
+				},
+				data:[]
+			},
+			yAxis: {
+                scale: true,
+				boundaryGap: [0, '100%'],
+				splitLine: {
+					show: false
+				}
+			},
+			series: [{
+				name: '价格',
+				type: 'line',
+				showSymbol: false,
+				hoverAnimation: false,
+				data: []
+			}]
+		};
+        myChartHS300.setOption(option);
+
+		setInterval(function () {
+		    $.get('/display_now_hs300').done(function(result) {
+                //data.shift();
+
+                    var rawData=result;
+
+                    var time = rawData.map(function (item) {//将原数组映射成新数组，时间
+                        return  item[0];
+                    });
+
+                    var price = rawData.map(function (item) {//将原数组映射成新数组，时间
+                        return  item[1];
+                    });
+
+                    myChartHS300.setOption({
+                        xAxis:{
+                            data:time
+                        },
+                        series: [{
+                            data: price
+                        }]
+                    });
+                    console.log("123");
+            });
+		}, 1000);
+
+    </script>

@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+#coding=utf-8
 from django.shortcuts import render
 
 
@@ -8,27 +8,19 @@ def DispalyHist(request):
         user=request.session['username']
         print user
         if user:
-            return render(request,'HistoryData.html', {'user': user})
+            return render(request, 'disHist/HistoryData.html', {'user': user})
     else:
-        return render(request,'HistoryData.html', {'user': None})
+        return render(request, 'disHist/HistoryData.html', {'user': None})
 
 def DispalyNow(request):
     if "username" in request.session:
         user = request.session['username']
         print user
         if user:
-            return render(request,'NowData.html', {'user': user})
+            return render(request, 'disNow/NowData.html', {'user': user})
     else:
-        return render(request,'NowData.html', {'user': None})
+        return render(request, 'disNow/NowData.html', {'user': None})
 
-def DisRecord(request):
-    if "username" in request.session:
-        user = request.session['username']
-        print user
-        if user:
-            return render(request,'Record.html', {'user': user})
-    else:
-        return render(request,'Record.html', {'user': None})
 
 def register(request):
     if "username" in request.session:
@@ -44,6 +36,6 @@ def change(request):
         user = request.session['username']
         print user
         if user:
-            return render(request, 'ChangeData.html', {'user': user})
+            return render(request, 'change/ChangeData.html', {'user': user})
     else:
-        return render(request, 'ChangeData.html', {'user': None})
+        return render(request, 'change/ChangeData.html', {'user': None})

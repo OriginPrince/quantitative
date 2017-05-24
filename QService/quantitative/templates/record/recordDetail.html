@@ -1,0 +1,62 @@
+{% include "top.html" %}
+<div id="content">
+  <div class="container-fluid">
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+            <h5>交易记录</h5>
+          </div>
+          <div class="widget-content nopadding">
+            <table class="table table-bordered data-table">
+              <thead>
+
+                <tr>
+                    <th>日期</th>
+                    <th>投资金额</th>
+                    <th>期数</th>
+                    <th>投资的股票</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for i in Detail %}
+                <tr class="gradeX">
+                  <td>{{ i.date }}</td>
+                  <td>{{ i.invest }}</td>
+                  <td>{{ i.term }}</td>
+                    {% ifequal i.stock 0 %}
+                        <td>180ETF</td>
+                    {% endifequal %}
+                    {% ifequal i.stock 1 %}
+                        <td>深100ETF</td>
+                    {% endifequal %}
+                    {% ifequal i.stock 2 %}
+                        <td>上证50A</td>
+                    {% endifequal %}
+                    {% ifequal i.stock 3 %}
+                        <td>沪深300A</td>
+                    {% endifequal %}
+                    {% ifequal i.stock 4 %}
+                        <td>创业板A</td>
+                    {% endifequal %}
+                    {% ifequal i.stock 5 %}
+                        <td>中小板A</td>
+                    {% endifequal %}
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+   $(function ($) {
+        $("#recordPage").addClass("active");
+   })
+</script>
+{% include "footer.html" %}

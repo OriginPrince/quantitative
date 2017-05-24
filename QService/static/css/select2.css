@@ -7,7 +7,8 @@ Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
     /* inline-block for ie7 */
     zoom: 1;
     *display: inline;
-    vertical-align: top; width:90%;
+    vertical-align: top;
+    width:55%;
 }
 .dataTables_length .select2-container{ width:auto!important;}
 .select2-container,
@@ -29,7 +30,6 @@ Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
 
 .select2-container .select2-choice {
     background-color: #fff;
-
     -moz-background-clip: padding;
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
@@ -40,7 +40,7 @@ Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
     position: relative;
     height: 26px;
     line-height: 26px;
-    padding: 0 0 0 8px;
+    padding: 5px 0 5px 8px;
     color: #444;
     text-decoration: none;
 }

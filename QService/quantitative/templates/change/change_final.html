@@ -1,0 +1,116 @@
+<h4>希望若干年后拥有一笔资产，计算每期的投资</h4>
+            <form class="form-horizontal" method="post" action="#" name="basic_validate" id="basic_validate" style="margin:0 auto;margin-top:20px;width:800px;" novalidate="novalidate">
+              <div class="control-group">
+                <label class="control-label">最终价值目标</label>
+                <div class="controls">
+                  <input type="text"  id="FulInvest" placeholder="请输入最终价值目标" >
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">将要投资总期数</label>
+                <div class="controls">
+                  <input type="text"  id="Fterms" placeholder="请输入整数值">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">投资增长率</label>
+                <div class="controls">
+                  <input type="text"  id="FinRate" placeholder="请输入十分制数据，比如0.012">
+                </div>
+              </div>
+                <div class="control-group">
+                <label class="control-label">税率</label>
+                <div class="controls">
+                  <input type="text" id="FtaxRate" placeholder="请输入十分制数据，比如0.005">
+                </div>
+              </div>
+                <div class="control-group">
+                <label class="control-label">每期多长时间</label>
+                <div class="controls">
+                  <select id="FdayCount">
+                      <option value="15" selected="selected">15天</option>
+                      <option value="30">30天</option>
+                      <option value="60">60天</option>
+                      <option value="90">90天</option>
+                  </select>
+                </div>
+              </div>
+              <div class="controls" style="margin-top:30px;">
+                  <input type="reset" value="重置" class="btn btn-reset" style="margin-left: 70px;padding:8px 20px 8px 20px;">
+                <input type="submit" id="Fsubmit" value="确定" class="btn btn-success" onclick="return false;" style="float:right;margin-right: 120px;padding:8px 20px 8px 20px;">
+              </div>
+            </form>
+
+<script>
+    function isInt(obj){
+        return obj%1===0
+    }
+    $("#Fsubmit").click(function(){
+                 var FulInvest=$("#FulInvest").val();
+                 var Fterms=$("#Fterms").val();
+                 var FtermsFlag=isInt(Fterms)
+                 var FinRate=$("#FinRate").val();
+                 var FtaxRate=$("#FtaxRate").val();
+                 var FdayCount=$("#FdayCount").val();
+                 if(FulInvest<=0){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("最终价值目标输入有误");
+                 }
+                 else if(Fterms<=0||!FtermsFlag){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("将要投资总期数输入有误");
+                 }
+                 else if(FinRate<=0){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("投资增长率率输入有误");
+                 }
+                 else if(FtaxRate<=0){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("税率输入有误");
+                 }
+                 else{
+                        $.post("/change_final/",{FulInvest:FulInvest,Fterms:Fterms,FinRate:FinRate,FtaxRate:FtaxRate,FdayCount:FdayCount}).done(function(result){
+                             if(result=="true"){
+                                 $("#textMessage").text("设置成功");
+                                 $("#TextSubmit").click(function(){
+                                     location.reload();
+                                 });
+                                 //注意此出绑定的方法是否为一次性
+                                 $("#textExample").modal('toggle');
+                             }else{
+                                 $("#example").modal('toggle');
+                                 $("#AlertMessage").text("设置失败");
+                             }
+                     })
+                 }
+    });
+    $("#FulInvest").blur(function(){
+       var FulInvest=$("#FulInvest").val();
+       if(FulInvest<=0){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("最终价值目标输入有误");
+                 }
+
+    });
+    $("#Fterms").blur(function(){
+       var Fterms=$("#Fterms").val();
+       if(Fterms<=0){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("将要投资总期数输入有误");
+                 }
+    });
+    $("#FinRate").blur(function(){
+        var FinRate=$("#FinRate").val();
+        if(FinRate<=0){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("投资增长率率输入有误");
+                 }
+    });
+    $("#FtaxRate").blur(function(){
+        var FtaxRate=$("#FtaxRate").val();
+        if(FtaxRate<=0){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("税率输入有误");
+                 }
+    })
+</script>

@@ -1,0 +1,120 @@
+<h4>刚开始投资，看看若干年后所拥有的总金额</h4>
+            <form class="form-horizontal" method="post" action="#" name="basic_validate" id="basic_validate" novalidate="novalidate" style="margin:0 auto;margin-top:20px;width:800px;">
+              <div class="control-group">
+                <label class="control-label">初始每月期望投资</label>
+                <div class="controls">
+                  <input type="text"  id="IinInvest" placeholder="初始每月期望投资" >
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">将要投资总期数</label>
+                <div class="controls">
+                  <input type="text"  id="Iterms" placeholder="请输入整数值">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">投资增长率</label>
+                <div class="controls">
+                  <input type="text"  id="IinRate" placeholder="请输入十分制数据，比如0.012">
+                </div>
+              </div>
+                <div class="control-group">
+                <label class="control-label">税率</label>
+                <div class="controls">
+                  <input type="text" id="ItaxRate" placeholder="请输入十分制数据，比如0.005">
+                </div>
+              </div>
+                <div class="control-group">
+                <label class="control-label">每期多长时间</label>
+                <div class="controls">
+                  <select id="IdayCount">
+                      <option value="15" selected="selected">15天</option>
+                      <option value="30">30天</option>
+                      <option value="60">60天</option>
+                      <option value="90">90天</option>
+                  </select>
+                </div>
+              </div>
+              <div class="controls" style="margin-top:30px;">
+                  <input type="reset" value="重置" class="btn btn-reset" style="margin-left: 70px;padding:8px 20px 8px 20px;">
+                <input type="submit" id="Isubmit" value="确定" class="btn btn-success" onclick="return false;" style="float:right;margin-right: 120px;padding:8px 20px 8px 20px;">
+              </div>
+            </form>
+
+
+
+
+<script>
+    function isInt(obj){
+        return obj%1===0
+    }
+    $("#Isubmit").click(function(){
+                 var IinInvest=$("#IinInvest").val();
+                 var Iterms=$("#Iterms").val();
+                 var ItermsFlag=isInt(Iterms)
+                 var IinRate=$("#IinRate").val();
+                 var ItaxRate=$("#ItaxRate").val();
+                 var IdayCount=$("#IdayCount").val();
+                 if(IinInvest<=0){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("初始每月期望投资");
+                 }
+                 else if(Iterms<=0||!ItermsFlag){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("将要投资总期数输入有误");
+                 }
+                 else if(IinRate<=0){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("投资增长率率输入有误");
+                 }
+                 else if(ItaxRate<=0){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("税率输入有误");
+                 }
+                 else{
+                     alert(IdayCount)
+                        $.post("/change_initial/",{FinInvest:IinInvest,Fterms:Iterms,FinRate:IinRate,FtaxRate:ItaxRate,FdayCount:IdayCount}).done(function(result){
+                             if(result=="true"){
+                                 $("#textMessage").text("设置成功");
+                                 $("#TextSubmit").click(function(){
+                                     location.reload();
+                                 });
+                                 //注意此出绑定的方法是否为一次性
+                                 $("#textExample").modal('toggle');
+                             }else{
+                                 $("#example").modal('toggle');
+                                 $("#AlertMessage").text("设置失败");
+                             }
+                     })
+                 }
+    });
+    $("#IulInvest").blur(function(){
+       var IulInvest=$("#IulInvest").val();
+       if(IulInvest<=0){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("最终价值目标输入有误");
+                 }
+
+    });
+    $("#Iterms").blur(function(){
+       var Iterms=$("#Iterms").val();
+       if(Iterms<=0){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("将要投资总期数输入有误");
+                 }
+    });
+    $("#IinRate").blur(function(){
+        var IinRate=$("#IinRate").val();
+        if(IinRate<=0){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("投资增长率率输入有误");
+                 }
+    });
+    $("#ItaxRate").blur(function(){
+        var ItaxRate=$("#ItaxRate").val();
+        if(ItaxRate<=0){
+                     $("#example").modal('toggle');
+                    $("#AlertMessage").text("税率输入有误");
+                 }
+    })
+</script>

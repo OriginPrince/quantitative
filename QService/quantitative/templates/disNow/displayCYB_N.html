@@ -1,0 +1,82 @@
+ <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+    <div id="mainCYB" style="width: 600px;height:400px;"></div>
+ <div>
+        <p id="CYBTime" style="text-align: center"></p>
+    </div>
+	<script type="text/javascript">
+        setInterval(function () {
+		    $.get('/display_now_cyb_price').done(function(result) {
+
+		            var time = result.map(function (item) {//将原数组映射成新数组，时间
+                        return  item[0];
+                    });
+
+                    var price = result.map(function (item) {//将原数组映射成新数组，时间
+                        return  item[1];
+                    });
+                    $("#CYBTime").text("时间："+time+"　　　　"+"价格："+price);
+            });
+		}, 1000);
+        // 基于准备好的dom，初始化echarts实例
+        var myChartCYB = echarts.init(document.getElementById('mainCYB'));
+		option = {
+			title: {
+				text: '创业板实时数据'
+			},
+			tooltip: {
+				trigger: 'axis',
+				axisPointer: {
+					animation: false
+				}
+			},
+			xAxis: {
+				type: 'category',
+				splitLine: {
+					show: false
+				},
+				data:[]
+			},
+			yAxis: {
+                scale: true,
+				boundaryGap: [0, '100%'],
+				splitLine: {
+					show: false
+				}
+			},
+			series: [{
+				name: '价格',
+				type: 'line',
+				showSymbol: false,
+				hoverAnimation: false,
+				data: []
+			}]
+		};
+        myChartCYB.setOption(option);
+
+		setInterval(function () {
+		    $.get('/display_now_cyb').done(function(result) {
+                //data.shift();
+
+                    var rawData=result;
+
+                    var time = rawData.map(function (item) {//将原数组映射成新数组，时间
+                        return  item[0];
+                    });
+
+                    var price = rawData.map(function (item) {//将原数组映射成新数组，时间
+                        return  item[1];
+                    });
+
+                    myChartCYB.setOption({
+                        xAxis:{
+                            data:time
+                        },
+                        series: [{
+                            data: price
+                        }]
+                    });
+                    console.log("123");
+            });
+		}, 1000);
+
+    </script>

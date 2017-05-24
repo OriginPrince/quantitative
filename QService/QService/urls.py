@@ -32,17 +32,22 @@ import quantitative.registerLogin.register as rl
 import quantitative.registerLogin.login as rel
 import django
 import settings
-import quantitative.analysis.changeData as QC
+import quantitative.analysis.changeDataCF as QC
+import quantitative.analysis.changeDataCI as QI
+import quantitative.analysis.changeDataAF as AF
+import quantitative.record.disRecord as DR
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^disHist/$', qu.DispalyHist),
     url(r'^disNow/$', qu.DispalyNow),
-    url(r'^disRecord/$', qu.DisRecord),
+    url(r'^disRecord/$', DR.recordList),
+    url(r'^recordDetail/$', DR.recordDetail),
     url(r'^register/$', qu.register),
     url(r'^change/$', qu.change),
     url(r'^change_final/$', QC.change_final),
-    url(r'^change_initial/$', QC.change_initial),
+    url(r'^change_initial/$', QI.change_initial),
+    url(r'^change_AFinal/$', AF.change_AFinal),
     url(r'^post_register/$',rl.post_register ),
     url(r'^post_login/$', rel.post_login),
     url(r'^logout/$', rel.logout),

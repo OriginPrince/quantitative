@@ -2,14 +2,21 @@
 	outline:none !important;
 	-moz-outline: none !important;
 }
-html, body{height:100%}
+html, body{
+	height:100%;
+	font-size: 17px;
+}
+label, input, button, select, textarea {
+    font-size: 18px;
+    font-weight: normal;
+}
 /* Main */
 
 /*Bootstrap-overlay*/
 
 body {
 	overflow-x: hidden;
-	margin-top: -10px; font-family: 'Open Sans', sans-serif; font-size:12px; color:#666;
+	margin-top: -10px; font-family: 'Open Sans', sans-serif; /*font-size:12px;*/ color:#666;
 }
 a{color:#666;}
 a:hover, a:focus {
@@ -109,7 +116,7 @@ hr{ border-top-color:#dadada;}
 #user-nav > ul > li > a {
 	padding:9px 10px;
 	display: block;
-	font-size: 11px;
+	/*font-size: 11px;*/
 }
 #user-nav > ul > li > a:hover, #user-nav > ul > li.open > a {
 	color: #ffffff;  background:#000;
@@ -192,9 +199,9 @@ hr{ border-top-color:#dadada;}
 	background: none repeat scroll 0 0 #eeeeee;
 	margin-left: 220px;
 	margin-right: 0;
-	padding-bottom: 25px;
+	/*padding-bottom: 25px;*/
 	position: relative;
-	min-height:100%;
+	min-height:90%;
 	width: auto;
 }
 #content-header {
@@ -229,6 +236,7 @@ hr{ border-top-color:#dadada;}
 }
 .container-fluid .row-fluid:first-child {
 	margin-top: 20px;
+	margin-bottom: 20px;
 }
 /* Breadcrumb */
 #breadcrumb {
@@ -511,10 +519,12 @@ hr{ border-top-color:#dadada;}
 	border-top: 1px solid #CDCDCD;
 	border-right: 1px solid #CDCDCD;
 	clear: both;
-	margin-top: 16px;
+	/*margin-top: 16px;
 	margin-bottom: 16px;
+	padding-bottom:200px;*/
 	position: relative;
 }
+
 .widget-box.widget-calendar, .widget-box.widget-chat {
 	overflow:hidden !important;
 }
@@ -1122,20 +1132,26 @@ form {
 .form-horizontal .control-group {
 	border-top: 1px solid #ffffff;
 	border-bottom: 1px solid #eeeeee;
-	margin-bottom: 0;
+	margin-bottom: 12px;
+	margin-top:12px;
 }
 .form-horizontal .control-group:last-child {
 	border-bottom: 0;
 }
 .form-horizontal .control-label {
-	padding-top: 15px;
-	width: 180px;
+	padding-top: 20px;
+	width: 300px;
+	margin-right:40px;
+}
+input, textarea, .uneditable-input {
+    width: 300px;
 }
 .form-horizontal .controls {
 	margin-left: 200px;
 	padding: 10px 0;
 }
 .form-horizontal input[type=text], .form-horizontal input[type=password], .form-horizontal textarea {
+	padding:7px;
 }
 .row-fluid .span20 {
 	width:97.8%

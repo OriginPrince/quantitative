@@ -25,48 +25,30 @@
 <!--top-Header-menu-->
 <div id="user-nav" class="navbar navbar-inverse">
   <ul class="nav">
-    <li  class="" id="profile-messages" >
+    <li  class="" id="profile-messages">
         {% if user %}
-        <a title="" href="#">
+        <a title="" href="#" style="overflow: hidden;height: 59px;line-height: 59px;font-size: 20px; ">
             <i class="icon icon-user"></i>
             <span class="text">欢迎{{ user }}</span>
             <b class="caret"></b>
         </a>
         {%else%}
-        <a title="" href="#exampleModal"  data-toggle="modal" data-target="#exampleModal" >
+        <a title="" href="#exampleModal"  data-toggle="modal" data-target="#exampleModal"  style="font-size: 20px; overflow: hidden;height: 59px;line-height: 59px;">
             <i class="icon icon-user"></i>
             <span class="text">登录</span>
             <b class="caret"></b>
         </a>
         {% endif %}
     </li>
-    <li class="dropdown" id="menu-messages">
-        <a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle">
-            <i class="icon icon-envelope"></i>
-            <span class="text">消息</span>
-            <span class="label label-important">5</span>
-            <b class="caret"></b>
-        </a>
-      <ul class="dropdown-menu">
-        <li><a class="sAdd" title="" href="#"><i class="icon-plus"></i> new message</a></li>
-        <li class="divider"></li>
-        <li><a class="sInbox" title="" href="#"><i class="icon-envelope"></i> inbox</a></li>
-        <li class="divider"></li>
-        <li><a class="sOutbox" title="" href="#"><i class="icon-arrow-up"></i> outbox</a></li>
-        <li class="divider"></li>
-        <li><a class="sTrash" title="" href="#"><i class="icon-trash"></i> trash</a></li>
-      </ul>
-    </li>
     <li class="">
-        <a title="" href="#" id="logout">
-            <i class="icon icon-share-alt"></i>
+        <a title="" href="#" id="logout" style="overflow: hidden;height: 59px;line-height: 59px;font-size: 20px; ">
+            <i class="icon icon-share-alt" style="height: 77px;"></i>
             <span class="text">注销</span>
         </a>
     </li>
+
   </ul>
 </div>
-
-
 
 <!--sidebar-menu-->
 <div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
@@ -90,13 +72,13 @@
         <form class="form-horizontal" method="post" action="#" name="basic_validate" id="basic_validate" novalidate="novalidate">
             <div class="modal-body">
               <div class="control-group">
-                <label class="control-label" style="margin-right: 30px;font-size: 1.3em">手机号</label>
+                <label class="control-label" style="width:160px;margin-right: 30px;font-size: 1.3em">手机号</label>
                 <div class="controls">
                   <input type="text" name="phone" id="LOphone">
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" style="margin-right: 30px;font-size: 1.3em">密码</label>
+                <label class="control-label" style="width:160px;margin-right: 30px;font-size: 1.3em">密码</label>
                 <div class="controls">
                   <input type="password" name="psd" id="LOpsd">
                 </div>
@@ -146,6 +128,9 @@
 </div>
 
 <script>
+    $("#test").click(function(){
+        alert("123")
+    })
     $(function($){
         $.ajaxSetup({
             data: {csrfmiddlewaretoken: '{{ csrf_token }}' },

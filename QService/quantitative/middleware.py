@@ -23,4 +23,4 @@ class LoginRequireMiddleware(MiddlewareMixin):
                 if result is not None:
                     flag=1
             if flag==1:
-                return render_to_response('HistoryData.html')
+                return render_to_response('disHist/HistoryData.html')

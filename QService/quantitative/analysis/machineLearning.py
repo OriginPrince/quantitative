@@ -1,9 +1,15 @@
 #coding=utf-8
+'''
+@author:ElegyPrincess
+@project:利用SVM进行收益率的回归预测
+'''
 import MySQLdb
 import numpy as np
 from sklearn.svm import SVR
 
 def MaLearning(stock,dayCount):
+    if type(dayCount).__name__=="unicode":
+        dayCount=int(dayCount)
     #从数据库查询出来数据做SVM回归预测
     conn = MySQLdb.Connect(host='localhost', user='root', passwd='888212', db='economic', port=3306, charset='utf8')
     cur = conn.cursor()
@@ -17,7 +23,7 @@ def MaLearning(stock,dayCount):
     data = np.mat(result)
     data = data.ravel()
     data = np.array(data[0])
-    # print u'数据：',data
+    print u'数据：',data
 
     i = 0
     reRate = []
@@ -28,13 +34,13 @@ def MaLearning(stock,dayCount):
     for j in data[0]:
         sum += j
         i = i + 1
-        if str(i)==dayCount:
+        if i==dayCount:
             sumValule.append(sum)
             #print "添加"+str(sum)
             i = 0
             sum = 0
 
-    #print u'总和：',sumValule
+    print u'总和：',sumValule
     #计算收益率
     k = 0
     while k < (len(sumValule) - 1):

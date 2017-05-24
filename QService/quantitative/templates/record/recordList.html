@@ -1,0 +1,168 @@
+{% include "top.html" %}
+<div id="content">
+
+  <div class="container-fluid">
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+            <h5>情景一</h5>
+          </div>
+          <div class="widget-content nopadding">
+            <table class="table table-bordered data-table">
+              <thead>
+                <tr>
+                    <th>时间</th>
+                    <th>初始每月期望投资</th>
+                    <th>总期数</th>
+                    <th>投资增长率</th>
+                    <th>税率</th>
+                    <th>每期多长时间</th>
+                    <th>是否结束</th>
+                    <th>收益率</th>
+                    <th>投资记录</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for i in CI %}
+                <tr class="gradeX">
+                  <td>{{ i.time }}</td>
+                  <td>{{ i.initiateInvest }}</td>
+                  <td>{{ i.terms }}</td>
+                  <td>{{ i.rateInvest }}</td>
+                    <td>{{ i.rateTax}}</td>
+                    <td>{{ i.dayCount }}</td>
+                    {% ifequal i.over 1 %}
+                        <td>未结束</td>
+                    {% else %}
+                        <td>结束</td>
+                    {% endifequal %}
+                    <td>{{ i.rateReturn }}</td>
+                    <td>
+                        <input type="text" style="display: none;" value="{{ i.id_plan }}"/>
+                        <a class="amend">投资记录</a>
+                    </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <div class="row-fluid">
+      <div class="span12">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+            <h5>情景二</h5>
+          </div>
+          <div class="widget-content nopadding">
+            <table class="table table-bordered data-table">
+              <thead>
+                <tr>
+                    <th>时间</th>
+                    <th>最终价值目标</th>
+                    <th>总期数</th>
+                    <th>投资增长率</th>
+                    <th>税率</th>
+                    <th>每期多长时间</th>
+                    <th>是否结束</th>
+                    <th>收益率</th>
+                    <th>投资记录</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for i in CF %}
+                <tr class="gradeX">
+                  <td>{{ i.time }}</td>
+                  <td>{{ i.ultimateInvest }}</td>
+                  <td>{{ i.terms }}</td>
+                  <td>{{ i.rateInvest }}</td>
+                    <td>{{ i.rateTax}}</td>
+                    <td>{{ i.dayCount }}</td>
+                    {% ifequal i.over 1 %}
+                        <td>未结束</td>
+                    {% else %}
+                        <td>结束</td>
+                    {% endifequal %}
+                    <td>{{ i.rateReturn }}</td>
+                    <td>
+                        <input type="text" style="display: none;" value="{{ i.id_plan }}"/>
+                        <a class="amend">投资记录</a>
+                    </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+      <div class="row-fluid">
+      <div class="span12">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+            <h5>情景三</h5>
+          </div>
+          <div class="widget-content nopadding">
+            <table class="table table-bordered data-table">
+              <thead>
+                <tr>
+                    <th>时间</th>
+                    <th>最终价值目标</th>
+                    <th>已经投资的金额</th>
+                    <th>总期数</th>
+                    <th>投资增长率</th>
+                    <th>税率</th>
+                    <th>每期多长时间</th>
+                    <th>是否结束</th>
+                    <th>收益率</th>
+                    <th>投资记录</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for i in AF %}
+                <tr class="gradeX">
+                  <td>{{ i.time }}</td>
+                  <td>{{ i.ultimateInvest }}</td>
+                    <td>{{ i.IVInvest }}</td>
+                  <td>{{ i.terms }}</td>
+                  <td>{{ i.rateInvest }}</td>
+                    <td>{{ i.rateTax}}</td>
+                    <td>{{ i.dayCount }}</td>
+                    {% ifequal i.over 1 %}
+                        <td>未结束</td>
+                    {% else %}
+                        <td>结束</td>
+                    {% endifequal %}
+                    <td>{{ i.rateReturn }}</td>
+                    <td>
+                        <input type="text" style="display: none;" value="{{ i.id_plan }}"/>
+                        <a class="amend">投资记录</a>
+                    </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+   $(function ($) {
+        $("#recordPage").addClass("active");
+   })
+    $(".amend").click(function(){
+        var id_plan=$(this).prev().val();
+        var str='/recordDetail/?id_plan='+id_plan;
+        window.location.href=str
+    })
+</script>
+{% include "footer.html" %}
