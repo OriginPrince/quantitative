@@ -10,7 +10,6 @@ timer_interval=1
 engine=create_engine('mysql://root:888212@127.0.0.1/economic?charset=utf8')
 		
 class threadCYB(threading.Thread):
-
     def __init__(self):
         threading.Thread.__init__(self)
         self.__flag = threading.Event()     # 用于暂停线程的标识

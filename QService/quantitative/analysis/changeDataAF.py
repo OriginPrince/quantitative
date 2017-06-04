@@ -14,6 +14,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 import stockData as SD
 import machineLearning as ml
 import tushare as ts
+import random
 
 scheduler = BackgroundScheduler()
 scheduler.start()
@@ -123,11 +124,12 @@ def change_AFinal(request):
         t=T-n#目前的时间
         fd = ts.get_realtime_quotes(stock_id)
         price = float(fd['price'])  # 每股的价格
+        #price=random.uniform(0.9,1.2)#模拟计算的
         alVolume=alInvest/price
 
         tempTime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
         #暂时存储一些默认值
-        tempClass=3
+        tempClass=2
         tempAlterms=0
         tempVolume=alVolume
         tempAlInvest=alInvest#已经投资的金额

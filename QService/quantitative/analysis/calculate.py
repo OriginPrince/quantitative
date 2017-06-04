@@ -8,6 +8,7 @@ import Data as DA
 import tushare as ts
 import time
 import machineLearning as ml
+import random
 
 #进行情景二的投资计算
 def calculateAl(inRate,T,t,ulInvest,dayCount,stock,id_plan,stock_id,taxRate):#计算价值目标，参数：投资增长率，总期数，总额度，时间间隔，股指，对应投资计划的id，股指基金代码
@@ -39,6 +40,7 @@ def calculateAl(inRate,T,t,ulInvest,dayCount,stock,id_plan,stock_id,taxRate):#�
 
             fd=ts.get_realtime_quotes(stock_id)
             price=float(fd['price'])#每股的价格
+            #price = random.uniform(0.9, 1.2)#模拟计算的
             NeedInvest=TInvest-alVolume*price#本次投资的金额
             NeedVolume=NeedInvest/price#本次投资的份额
 

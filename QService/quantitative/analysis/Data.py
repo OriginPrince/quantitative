@@ -5,6 +5,7 @@
 '''
 import  MySQLdb
 import tushare as ts
+import random
 #查询id_plan的数据
 def Data(id_plan):
     try:
@@ -68,8 +69,10 @@ def Data_rateReturn(id_plan,stock_id):
         print alInvest,volume
         fd = ts.get_realtime_quotes(stock_id)
         price = float(fd['price'])  # 每股的价格
+        #price = random.uniform(0.9, 1.2)  # 模拟计算的
         alValue=price*volume
         returnRate=(alValue-alInvest)/alInvest
+        print "股指收益率",returnRate
         sql = "update valueplan set rateReturn=%s where id = %s"
         m = cur.execute(sql, (returnRate,id_plan))
         conn.commit()

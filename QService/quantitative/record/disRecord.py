@@ -57,7 +57,7 @@ def recordList(request):
 
             # 3.编写sql
             # sql = 'SELECT date,open,close,low,high,volume,amount FROM cyb_hist_data where date="'+request.GET['date']+' 00:00:00"'
-            sql2= "SELECT id,IVInvest,time,initiateInvest,over,rateReturn,terms,rateInvest,rateTax,dayCount  FROM valueplan where id_user=%s and class=0"
+            sql2= "SELECT id,IVInvest,time,initiateInvest,over,rateReturn,terms,rateInvest,rateTax,dayCount  FROM valueplan where id_user=%s and class=2"
             # 4.执行sql命令
             # execute可执行数据库查询select和命令insert，delete，update三种命令(这三种命令需要commit()或rollback())
             cur.execute(sql2, (id_user))

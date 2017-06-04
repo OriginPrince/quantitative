@@ -13,17 +13,19 @@ def MaLearning(stock,dayCount):
     #从数据库查询出来数据做SVM回归预测
     conn = MySQLdb.Connect(host='localhost', user='root', passwd='888212', db='economic', port=3306, charset='utf8')
     cur = conn.cursor()
-    sql = "SELECT close FROM "+stock+" order by date"
-    cur.execute(sql)
+    sql = "SELECT close FROM histdata where stock=%s order by date"
+    cur.execute(sql,(stock,))
     result = cur.fetchall()
     #print result
     cur.close()
     conn.close()
 
     data = np.mat(result)
+    print "hehe",data
     data = data.ravel()
+    print "hehe",data
     data = np.array(data[0])
-    print u'数据：',data
+    print u'数据：',data[0]
 
     i = 0
     reRate = []
@@ -40,7 +42,7 @@ def MaLearning(stock,dayCount):
             i = 0
             sum = 0
 
-    print u'总和：',sumValule
+    print u'总和：',i
     #计算收益率
     k = 0
     while k < (len(sumValule) - 1):
@@ -51,6 +53,7 @@ def MaLearning(stock,dayCount):
     print u'增长率：', reRate
     #使用收益率来做预测
     X = np.array(range(0, len(reRate)))
+    print "X的值",X
     X = np.mat(X)
     X = X.transpose()
 

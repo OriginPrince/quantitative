@@ -34,13 +34,13 @@
               <div class="control-group">
                 <label class="control-label">投资增长率</label>
                 <div class="controls">
-                  <input type="text"  id="AFinRate" placeholder="投资增长率">
+                  <input type="text"  id="AFinRate" placeholder="请输入十分制数据，比如0.012">
                 </div>
               </div>
                 <div class="control-group">
                 <label class="control-label">税率</label>
                 <div class="controls">
-                  <input type="text" id="AFtaxRate" placeholder="税率">
+                  <input type="text" id="AFtaxRate" placeholder="请输入十分制数据，比如0.005">
                 </div>
               </div>
                 <div class="control-group">
@@ -81,11 +81,11 @@
                      $("#example").modal('toggle');
                     $("#AlertMessage").text("将要投资总期数输入有误");
                  }
-                 else if(AFinRate<=0){
+                 else if(AFinRate<=0||AFinRate>=1){
                      $("#example").modal('toggle');
                     $("#AlertMessage").text("投资增长率率输入有误");
                  }
-                 else if(AFtaxRate<=0){
+                 else if(AFtaxRate<=0||AFtaxRate>=1){
                      $("#example").modal('toggle');
                     $("#AlertMessage").text("税率输入有误");
                  }
@@ -123,14 +123,14 @@
     });
     $("#AFinRate").blur(function(){
         var AFinRate=$("#AFinRate").val();
-        if(AFinRate<=0){
+        if(AFinRate<=0||AFinRate>=1){
                      $("#example").modal('toggle');
                     $("#AlertMessage").text("投资增长率率输入有误");
                  }
     });
     $("#AFtaxRate").blur(function(){
         var AFtaxRate=$("#AFtaxRate").val();
-        if(AFtaxRate<=0){
+        if(AFtaxRate<=0||AFtaxRate>=1){
                      $("#example").modal('toggle');
                     $("#AlertMessage").text("税率输入有误");
                  }

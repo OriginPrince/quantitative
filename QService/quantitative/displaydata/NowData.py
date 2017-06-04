@@ -4,7 +4,6 @@
 '''
 import  MySQLdb
 
-
 def nowPrice(stock):
         try:
             # 1-7：如何使用python DB API访问数据库流程的
@@ -16,10 +15,10 @@ def nowPrice(stock):
             cur = conn.cursor()
             # 3.编写sql
             #sql = 'SELECT date,open,close,low,high,volume,amount FROM cyb_hist_data where date="'+request.GET['date']+' 00:00:00"'
-            sql = "SELECT time,price FROM "+stock+" order by time desc limit 1"
+            sql = "SELECT time,price FROM nowdata where stock=%s order by time desc limit 1"
             # 4.执行sql命令
             # execute可执行数据库查询select和命令insert，delete，update三种命令(这三种命令需要commit()或rollback())
-            cur.execute(sql)
+            cur.execute(sql,(stock,))
             # 5.获取数据
             # fetchall遍历execute执行的结果集。取execute执行后放在缓冲区的数据，遍历结果，返回数据。
             # 返回的数据类型是元组类型，每个条数据元素为元组类型:(('第一条数据的字段1的值','第一条数据的字段2的值',...,'第一条数据的字段N的值'),(第二条数据),...,(第N条数据))
@@ -44,10 +43,10 @@ def nowData(stock):
         # cursor对象支持的方法有execute(sql语句),fetchone(),fetchmany(size),fetchall(),rowcount,close()
         cur = conn.cursor()
         # 3.编写sql
-        sql = "SELECT time,price,date FROM "+stock
+        sql = "SELECT time,price,date FROM nowdata where stock=%s"
         # 4.执行sql命令
         # execute可执行数据库查询select和命令insert，delete，update三种命令(这三种命令需要commit()或rollback())
-        cur.execute(sql)
+        cur.execute(sql,(stock,))
         # 5.获取数据
         # fetchall遍历execute执行的结果集。取execute执行后放在缓冲区的数据，遍历结果，返回数据。
         # 返回的数据类型是元组类型，每个条数据元素为元组类型:(('第一条数据的字段1的值','第一条数据的字段2的值',...,'第一条数据的字段N的值'),(第二条数据),...,(第N条数据))

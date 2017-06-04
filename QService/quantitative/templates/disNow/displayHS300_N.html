@@ -13,14 +13,14 @@
                     var price = result.map(function (item) {//将原数组映射成新数组，时间
                         return  item[1];
                     });
-                    $("#HS300Time").text("时间："+time+"　　　　"+"价格："+price);
+                    $("#HS300Time").text("时间："+time+"　　　　"+"点位："+price);
             });
 		}, 1000);
         // 基于准备好的dom，初始化echarts实例
         var myChartHS300 = echarts.init(document.getElementById('mainHS300'));
 		option = {
 			title: {
-				text: '动态数据 + 时间坐标轴'
+				text: '沪深300实时数据'
 			},
 			tooltip: {
 				trigger: 'axis',

@@ -13,7 +13,7 @@
                     var price = result.map(function (item) {//将原数组映射成新数组，时间
                         return  item[1];
                     });
-                    $("#SHTime").text("时间："+time+"　　　　"+"价格："+price);
+                    $("#SHTime").text("时间："+time+"　　　　"+"点位："+price);
             });
 		}, 1000);
 
@@ -21,7 +21,7 @@
         var myChartSH = echarts.init(document.getElementById('mainSH'));
 		option = {
 			title: {
-				text: '动态数据 + 时间坐标轴'
+				text: '上证指数实时数据'
 			},
 			tooltip: {
 				trigger: 'axis',
